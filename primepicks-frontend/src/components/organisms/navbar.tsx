@@ -4,7 +4,7 @@ import Button from "../atoms/buttons/button";
 
 const Navbar: React.FC = () => {
   const navLinks = [
-    { label: "Explore", href: "/" },
+    { label: "Explore", href: "/explore" },
     { label: "About us", href: "/about" },
     { label: "Support", href: "/support" },
   ];

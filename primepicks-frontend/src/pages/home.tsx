@@ -7,6 +7,7 @@ import TrendingPicks from "../components/templates/home/trendingPicks";
 import ProductsPicks from "../components/templates/home/productpicks";
 import VehiclePicks from "../components/templates/home/vehiclepicks";
 import HousingPicks from "../components/templates/home/housingpicks";
+import Footer from "../components/organisms/footer";
 
 const Home: React.FC = () => {
   const siteReview = [
@@ -90,6 +91,7 @@ const Home: React.FC = () => {
           <HousingPicks />
         </div>
       </div>
+      <Footer />
     </>
   );
 };
