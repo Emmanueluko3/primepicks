@@ -3,6 +3,7 @@ import AuthButton from "../../atoms/buttons/authButton";
 import Google from "../../atoms/icons/Google.png";
 import Facebook from "../../atoms/icons/Facebook.png";
 import Input from "../../atoms/inputs/input";
+import { Link } from "react-router-dom";
 
 const FormSection: React.FC = () => {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -118,13 +119,13 @@ const FormSection: React.FC = () => {
             <p className="text-[#6B7180] text-[12px]">
               By signing up, you are creating a PrimePicks account, and you
               agree to our{" "}
-              <a href="" className="text-blue-600">
+              <Link to="" className="text-blue-600">
                 Terms of Use
-              </a>{" "}
+              </Link>{" "}
               and{" "}
-              <a href="" className="text-blue-600">
+              <Link to="" className="text-blue-600">
                 Privacy Policy
-              </a>
+              </Link>
               .
             </p>
           </div>

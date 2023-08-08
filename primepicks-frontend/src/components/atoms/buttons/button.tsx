@@ -6,7 +6,7 @@ const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
   return (
     <button
       {...rest}
-      className="border w-full border-gray-300 p-2 focus:outline-none focus:border-customGreen"
+      className="rounded-full flex items-center justify-center hover:opacity-90 text-white font-medium w-full h-full border-gray-300 py-2 px-6 bg-customGreen "
     >
       {children}
     </button>
