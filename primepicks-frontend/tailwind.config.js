@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         customGreen: "#34C456",
       },
+      backgroundImage: {
+        authImage: "url('./assets/authimg.svg')",
+      },
     },
   },
   plugins: [],
