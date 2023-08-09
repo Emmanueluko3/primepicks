@@ -41,7 +41,7 @@ const Home: React.FC = () => {
             </div>
             <h2 className="font-semibold text-5xl leading-[70px]">
               Your One-Stop <br /> Ecommerce{" "}
-              <span className="text-customGreen">Marketplace</span>
+              <span className="text-customGreen italic">Marketplace</span>
             </h2>
             <p className="text-gray-400 text-[16px] mb-6">
               Explore a world of limitless possibilities. Join our community of
