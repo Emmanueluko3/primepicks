@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/home";
 import Explore from "./pages/explore";
+import Cart from "./components/organisms/cart/cart";
 // import ProductView from "./components/organisms/product/productView";
 
 // const router = createBrowserRouter([
@@ -35,6 +36,18 @@ const router = createBrowserRouter([
   {
     path: "/explore",
     element: <Explore />,
+    // loader: rootLoader,
+    // children: [
+    //   {
+    //     path: "team",
+    //     element: <ProductView />,
+    //     // loader: teamLoader,
+    //   },
+    // ],
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
     // loader: rootLoader,
     // children: [
     //   {

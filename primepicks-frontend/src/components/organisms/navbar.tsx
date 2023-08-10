@@ -41,7 +41,10 @@ const Navbar: React.FC = () => {
           </svg>
           Account
         </button>
-        <button className="flex mr-6 font-medium hover:opacity-80 text-[16px]">
+        <Link
+          to="/cart"
+          className="flex relative mr-6 font-medium hover:opacity-80 text-[16px]"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -55,8 +58,11 @@ const Navbar: React.FC = () => {
               fill="#050505"
             />
           </svg>
+          <span className="h-4 w-4 flex items-center justify-center bg-customGreen text-white absolute -right-3 -top-2 rounded-full text-[12px]">
+            3
+          </span>
           Cart
-        </button>
+        </Link>
         <Button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
