@@ -8,10 +8,43 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from "./pages/home";
+import Explore from "./pages/explore";
+// import ProductView from "./components/organisms/product/productView";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<Home />}></Route>)
-);
+// const router = createBrowserRouter([
+//   createRoutesFromElements(
+//     <Route path="/" element={<Home />}>
+//       <Route path="/explore" element={<Explore />} />
+//     </Route>
+//   )
+// ]);
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    // loader: rootLoader,
+    // children: [
+    //   {
+    //     path: "team",
+    //     element: <ProductView />,
+    //     // loader: teamLoader,
+    //   },
+    // ],
+  },
+  {
+    path: "/explore",
+    element: <Explore />,
+    // loader: rootLoader,
+    // children: [
+    //   {
+    //     path: "team",
+    //     element: <ProductView />,
+    //     // loader: teamLoader,
+    //   },
+    // ],
+  },
+]);
 
 function App() {
   return (
