@@ -61,9 +61,11 @@ const ProductView: React.FC = () => {
             <h4 className="font-medium text-3xl">
               Samsung All New 43 Inch 5300 FHD Smart Television
             </h4>
-            <p>Location: Lagos</p>
-            <p>+ 234 813 1210 163</p>
-            <h3>N 98,000</h3>
+            <p className="text-[#686767] text-sm my-1">Location: Lagos</p>
+            <p className="text-customGreen text-sm font-medium mb-4">
+              + 234 813 1210 163
+            </p>
+            <h3 className="text-xl">N 98,000</h3>
           </div>
           <div className="w-full mb-5">
             <p className="mb-2">Quantity</p>

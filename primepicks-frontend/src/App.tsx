@@ -10,6 +10,7 @@ import {
 import Home from "./pages/home";
 import Explore from "./pages/explore";
 import Cart from "./components/organisms/cart/cart";
+import Checkout from "./components/organisms/cart/checkout";
 // import ProductView from "./components/organisms/product/productView";
 
 // const router = createBrowserRouter([
@@ -48,6 +49,18 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+    // loader: rootLoader,
+    // children: [
+    //   {
+    //     path: "team",
+    //     element: <ProductView />,
+    //     // loader: teamLoader,
+    //   },
+    // ],
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
     // loader: rootLoader,
     // children: [
     //   {
