@@ -3,8 +3,8 @@ import "./App.css";
 // import Auths from "./components/templates/auths/auths";
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  Route,
+  // createRoutesFromElements,
+  // Route,
   RouterProvider,
 } from "react-router-dom";
 import Home from "./pages/home";

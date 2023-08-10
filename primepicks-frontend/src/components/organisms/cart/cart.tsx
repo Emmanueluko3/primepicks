@@ -23,7 +23,7 @@ const Cart: React.FC = () => {
               <div className="rounded-lg h-24 w-32  mx-4 border p-3 border-[#828282]">
                 <img src={Lgtv} className="w-full h-full" alt="Laptop" />
               </div>
-              <div className="flex flex-col py-1 justify-between">
+              <div className="flex flex-col justify-between">
                 <h4 className="text-lg">
                   Samsung All New 43 Inch 5300 FHD Smart Television
                 </h4>
@@ -88,7 +88,7 @@ const Cart: React.FC = () => {
             <h4 className="font-medium text-lg mb-[5px]">Add Order Note</h4>
             <textarea
               rows={3}
-              className="p-4 border border-[#ACACAC] rounded-lg placeholder:italic"
+              className="p-4 w-full border border-[#ACACAC] rounded-lg placeholder:italic"
               placeholder="Type your message here"
             />
           </form>

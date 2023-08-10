@@ -77,7 +77,7 @@ const Home: React.FC = () => {
         <div className="w-full py-20">
           <ProductsPicks />
         </div>
-        <div className="w-full h-[60vh]">
+        <div className="w-full h-[70vh]">
           <img
             src={Banner}
             className="rounded-2xl w-full object-fill h-full"

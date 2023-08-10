@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Lgtv from "../../../assets/Lgtv.svg";
-import Suggestions from "../product/suggestedPicks";
 import Navbar from "../navbar";
 import Footer from "../footer";
 import Button from "../../atoms/buttons/button";
@@ -8,6 +7,7 @@ import Button from "../../atoms/buttons/button";
 const Checkout: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [deliveryType, setDeliveryType] = useState("Express Delivery");
+  const [dropdown, setDropdown] = useState(false);
 
   const productDeliverytype = [
     {
@@ -19,6 +19,51 @@ const Checkout: React.FC = () => {
       estimatedTime: "1-3 Days delivery",
     },
   ];
+
+  const cardIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="h-6 mr-3"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M10 4H14C17.771 4 19.657 4 20.828 5.172C21.672 6.015 21.908 7.229 21.974 9.25H2.026C2.092 7.229 2.328 6.015 3.172 5.172C4.343 4 6.229 4 10 4ZM14 20H10C6.229 20 4.343 20 3.172 18.828C2 17.657 2 15.771 2 12C2 11.558 2 11.142 2.002 10.75H21.998C22 11.142 22 11.558 22 12C22 15.771 22 17.657 20.828 18.828C19.657 20 17.771 20 14 20ZM6 15.25C5.80109 15.25 5.61032 15.329 5.46967 15.4697C5.32902 15.6103 5.25 15.8011 5.25 16C5.25 16.1989 5.32902 16.3897 5.46967 16.5303C5.61032 16.671 5.80109 16.75 6 16.75H10C10.1989 16.75 10.3897 16.671 10.5303 16.5303C10.671 16.3897 10.75 16.1989 10.75 16C10.75 15.8011 10.671 15.6103 10.5303 15.4697C10.3897 15.329 10.1989 15.25 10 15.25H6ZM12.5 15.25C12.3011 15.25 12.1103 15.329 11.9697 15.4697C11.829 15.6103 11.75 15.8011 11.75 16C11.75 16.1989 11.829 16.3897 11.9697 16.5303C12.1103 16.671 12.3011 16.75 12.5 16.75H14C14.1989 16.75 14.3897 16.671 14.5303 16.5303C14.671 16.3897 14.75 16.1989 14.75 16C14.75 15.8011 14.671 15.6103 14.5303 15.4697C14.3897 15.329 14.1989 15.25 14 15.25H12.5Z"
+        fill="#424141"
+      />
+    </svg>
+  );
+
+  const arrowIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      className={`h-6 w-6 font-medium transform-rotate duration-300 ease-in-out ${
+        dropdown ? "rotate-180" : "rotate-0"
+      }`}
+    >
+      <g clipPath="url(#clip0_146_2033)">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M12.7071 15.707C12.5196 15.8944 12.2653 15.9998 12.0001 15.9998C11.7349 15.9998 11.4806 15.8944 11.2931 15.707L5.6361 10.05C5.54059 9.95773 5.46441 9.84739 5.412 9.72538C5.35959 9.60338 5.332 9.47216 5.33085 9.33938C5.32969 9.2066 5.355 9.07492 5.40528 8.95202C5.45556 8.82913 5.52981 8.71747 5.6237 8.62358C5.7176 8.52969 5.82925 8.45544 5.95214 8.40515C6.07504 8.35487 6.20672 8.32957 6.3395 8.33073C6.47228 8.33188 6.6035 8.35947 6.7255 8.41188C6.84751 8.46428 6.95785 8.54047 7.0501 8.63598L12.0001 13.586L16.9501 8.63598C17.1387 8.45382 17.3913 8.35302 17.6535 8.3553C17.9157 8.35758 18.1665 8.46275 18.3519 8.64816C18.5373 8.83357 18.6425 9.08438 18.6448 9.34658C18.6471 9.60877 18.5463 9.86137 18.3641 10.05L12.7071 15.707Z"
+          fill="#050505"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_146_2033">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
   return (
     <>
       <Navbar />
@@ -147,6 +192,16 @@ const Checkout: React.FC = () => {
               </div>
               <h2 className="font-medium text-xl mb-5">Payment Method</h2>
               <div className="w-full flex justify-between items-center flex-wrap mb-2">
+                <div
+                  onClick={() => setDropdown(!dropdown)}
+                  className="mb-5 p-3 w-full rounded-lg border border-gray-500 flex justify-between items-center cursor-pointer"
+                >
+                  {cardIcon}
+                  <h3 className="mr-auto font-normal text-[16px]">
+                    Pay with Card
+                  </h3>
+                  {arrowIcon}
+                </div>
                 <div className="mb-5 w-[48%]">
                   <input
                     type="text"
