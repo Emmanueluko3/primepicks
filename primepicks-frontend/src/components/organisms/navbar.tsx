@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../atoms/buttons/button";
 
 const Navbar: React.FC = () => {
   const navLinks = [
