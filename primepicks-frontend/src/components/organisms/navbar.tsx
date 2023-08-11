@@ -63,7 +63,10 @@ const Navbar: React.FC = () => {
           </span>
           Cart
         </Link>
-        <Button>
+        <Link
+          to="/create"
+          className="rounded-full flex items-center justify-center hover:opacity-90 text-white font-medium w-full h-full border-gray-300 py-2 px-6 bg-customGreen"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -78,7 +81,7 @@ const Navbar: React.FC = () => {
             />
           </svg>
           Create New Listing
-        </Button>
+        </Link>
       </div>
     </div>
   );

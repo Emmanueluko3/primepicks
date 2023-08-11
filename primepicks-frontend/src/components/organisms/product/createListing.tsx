@@ -5,6 +5,7 @@ import Home from "../../../assets/Home.svg";
 import Footer from "../footer";
 import Navbar from "../navbar";
 import Button from "../../atoms/buttons/button";
+import { Link } from "react-router-dom";
 
 const CreateListing: React.FC = () => {
   const [selectedType, setSelectedType] = useState<number | null>(null);
@@ -59,9 +60,12 @@ const CreateListing: React.FC = () => {
         </div>
         <div className="w-[90%] mx-auto flex justify-between items-center">
           <div className="w-[25%]">
-            <button className="rounded-full border border-[#828282] hover:bg-gray-300 font-medium py-2 px-4 w-full text-[#585858] text-base">
+            <Link
+              to="/"
+              className="rounded-full border border-[#828282] hover:bg-gray-300 font-medium py-2 px-4 w-full flex justify-center items-center text-[#585858] text-base"
+            >
               Cancel
-            </button>
+            </Link>
           </div>
 
           <div className="w-[25%]">
