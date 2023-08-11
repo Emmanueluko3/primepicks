@@ -12,6 +12,7 @@ import Explore from "./pages/explore";
 import Cart from "./components/organisms/cart/cart";
 import Checkout from "./components/organisms/cart/checkout";
 import CreateListing from "./components/organisms/product/createListing";
+import Profile from "./components/organisms/userProfile/profile";
 // import ProductView from "./components/organisms/product/productView";
 
 // const router = createBrowserRouter([
@@ -50,6 +51,18 @@ const router = createBrowserRouter([
   {
     path: "/explore",
     element: <Explore />,
+    // loader: rootLoader,
+    // children: [
+    //   {
+    //     path: "team",
+    //     element: <ProductView />,
+    //     // loader: teamLoader,
+    //   },
+    // ],
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
     // loader: rootLoader,
     // children: [
     //   {
