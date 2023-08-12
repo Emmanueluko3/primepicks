@@ -8,31 +8,150 @@ import Button from "../../atoms/buttons/button";
 import { Link } from "react-router-dom";
 import Imageupload from "../../atoms/icons/Imageupload.svg";
 
+const listingType = [
+  {
+    image: Item,
+    title: "Item for Sale",
+    description: "Create listing for single or multiple items to sell.",
+  },
+  {
+    image: Vehicle,
+    title: "Vehicle for Sale",
+    description: "Create listing for your car, truck or other type of vehicles",
+  },
+  {
+    image: Home,
+    title: "Home for Sale/Rent",
+    description:
+      "Create listing for your single or multiple apartments available to sell/rent.",
+  },
+];
+
+const categories = [
+  "Electronics",
+  "Apparels",
+  "Shoes",
+  "Home Goods",
+  "Musical Instruments",
+  "Pet Supplies",
+  "Toys & Games",
+  "Garden",
+  "Outdoor",
+  "Beauty",
+  "Entertainment",
+];
+
+const vehicleTypes = ["Car", "Truck", "Motorcycle", "Bus"];
+
+const homeTypes = [
+  "Single-Family Home",
+  "Apartment",
+  "Condominium (Condo)",
+  "Townhouse",
+  "Duplex",
+  "Triplex",
+  "Fourplex",
+  "Cooperative (Co-op)",
+  "Mobile Home",
+  "Modular Home",
+  "Tiny House",
+  "Mansion",
+  "Cottage",
+  "Log Cabin",
+  "Bungalow",
+  "Ranch-style House",
+  "Colonial",
+  "Victorian",
+  "Contemporary",
+  "Traditional",
+  "Transitional",
+];
+
 const CreateListing: React.FC = () => {
   const [selectedType, setSelectedType] = useState<number | null>(null);
   const [productType, setProductType] = useState<number | null>(null);
-  const listingType = [
-    {
-      image: Item,
-      title: "Item for Sale",
-      description: "Create listing for single or multiple items to sell.",
-    },
-    {
-      image: Vehicle,
-      title: "Vehicle for Sale",
-      description:
-        "Create listing for your car, truck or other type of vehicles",
-    },
-    {
-      image: Home,
-      title: "Home for Sale/Rent",
-      description:
-        "Create listing for your single or multiple apartments available to sell/rent.",
-    },
-  ];
+
+  const [productTitle, setProductTitle] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productCondition, setProductCondition] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productLocation, setProductLocation] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productSpecification, setProductSpecification] = useState("");
+  const [vehicleType, setVehicleType] = useState("");
+  const [vehicleModel, setVehicleModel] = useState("");
+  const [vehicleYear, setVehicleYear] = useState("");
+  const [homeListingtype, setHomeListingType] = useState("");
+  const [homeType, setHomeType] = useState("");
+  const [bedroom, setBedroom] = useState("");
+  const [bathroom, setBathroom] = useState("");
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productType]);
+
+  const handleGoBack = () => {
+    // setSelectedType(null);
+    setProductType(null);
+
+    setProductTitle("");
+    setProductCategory("");
+    setProductCondition("");
+    setProductPrice("");
+    setProductLocation("");
+    setPhoneNumber("");
+    setProductDescription("");
+    setProductSpecification("");
+
+    setVehicleType("");
+    setVehicleModel("");
+    setVehicleYear("");
+
+    setHomeListingType("");
+    setHomeType("");
+    setBedroom("");
+    setBathroom("");
+  };
+
+  const itemListingDetails = {
+    name: productTitle,
+    category: productCategory,
+    condition: productCondition,
+    location: productLocation,
+    phone: phoneNumber,
+    price: productPrice,
+    currency: "N",
+    description: productDescription,
+    specifications: productSpecification,
+  };
+
+  const vehicleListingDetails = {
+    name: productTitle,
+    vehicleType: vehicleType,
+    vehicleYear: vehicleYear,
+    vehicleModel: vehicleModel,
+    condition: productCondition,
+    location: productLocation,
+    phone: phoneNumber,
+    price: productPrice,
+    currency: "N",
+    description: productDescription,
+    specifications: productSpecification,
+  };
+
+  const homeListingDetails = {
+    name: productTitle,
+    homeListingtype: homeListingtype,
+    homeType: homeType,
+    bedroom: bedroom,
+    bathroom: bathroom,
+    location: productLocation,
+    phone: phoneNumber,
+    price: productPrice,
+    currency: "N",
+    description: productDescription,
+  };
 
   return (
     <>
@@ -111,6 +230,8 @@ const CreateListing: React.FC = () => {
                 <input
                   type="text"
                   id="title"
+                  value={productTitle}
+                  onChange={(e) => setProductTitle(e.target.value)}
                   className="p-3 w-full rounded-lg border border-gray-500"
                   placeholder="Name of item"
                 />
@@ -132,15 +253,21 @@ const CreateListing: React.FC = () => {
                         className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                         name=""
                         id="listing"
+                        defaultValue={"DEFAULT"}
+                        onChange={(e) => setHomeListingType(e.target.value)}
                       >
                         <option
-                          value=""
+                          value="DEFAULT"
                           disabled
-                          selected
                           className="bg-[#CDCDCD66]"
                         >
                           Select
                         </option>
+                        {homeTypes.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
@@ -157,15 +284,18 @@ const CreateListing: React.FC = () => {
                         className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                         name=""
                         id="homeType"
+                        defaultValue={"DEFAULT"}
+                        onChange={(e) => setHomeType(e.target.value)}
                       >
                         <option
-                          value=""
+                          value="DEFAULT"
                           disabled
-                          selected
                           className="bg-[#CDCDCD66]"
                         >
                           Select
                         </option>
+                        <option value="For Rent">For Rent</option>
+                        <option value="For Sale">For Sale</option>
                       </select>
                     </div>
                     <div className="w-[48%] mb-5">
@@ -180,6 +310,8 @@ const CreateListing: React.FC = () => {
                         className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                         name=""
                         id="bedroom"
+                        value={bedroom}
+                        onChange={(e) => setBedroom(e.target.value)}
                         placeholder="Number of Bedrooms"
                       />
                     </div>
@@ -195,6 +327,8 @@ const CreateListing: React.FC = () => {
                         className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                         name=""
                         id="bathroom"
+                        value={bathroom}
+                        onChange={(e) => setBathroom(e.target.value)}
                         placeholder="Number of Bathrooms"
                       />
                     </div>
@@ -217,15 +351,21 @@ const CreateListing: React.FC = () => {
                           className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                           name=""
                           id="category"
+                          defaultValue={"DEFAULT"}
+                          onChange={(e) => setProductCategory(e.target.value)}
                         >
                           <option
-                            value=""
+                            value="DEFAULT"
                             disabled
-                            selected
                             className="bg-[#CDCDCD66]"
                           >
                             Select
                           </option>
+                          {categories.map((item, index) => (
+                            <option key={index} value={item}>
+                              {item}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     ) : (
@@ -242,16 +382,21 @@ const CreateListing: React.FC = () => {
                           className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                           name=""
                           id="vehicleType"
+                          defaultValue={"DEFAULT"}
+                          onChange={(e) => setVehicleType(e.target.value)}
                         >
-                          {" "}
                           <option
-                            value=""
+                            value="DEFAULT"
                             disabled
-                            selected
                             className="bg-[#CDCDCD66]"
                           >
                             Select
                           </option>
+                          {vehicleTypes.map((item, index) => (
+                            <option key={index} value={item}>
+                              {item}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     )}
@@ -267,19 +412,20 @@ const CreateListing: React.FC = () => {
                         className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                         name=""
                         id="condition"
+                        defaultValue={"DEFAULT"}
+                        onChange={(e) => setProductCondition(e.target.value)}
                       >
                         <option
-                          value=""
-                          selected
+                          value="DEFAULT"
                           disabled
                           className="bg-[#CDCDCD66] text-gray-400"
                         >
                           Select
                         </option>
-                        <option value="" className="bg-[#CDCDCD66]">
+                        <option value="New" className="bg-[#CDCDCD66]">
                           New
                         </option>
-                        <option value="" className="bg-[#CDCDCD66]">
+                        <option value="Used" className="bg-[#CDCDCD66]">
                           Used
                         </option>
                       </select>
@@ -296,21 +442,14 @@ const CreateListing: React.FC = () => {
                         </label>
                         <br />
 
-                        <select
+                        <input
                           className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                           name=""
                           id="year"
-                        >
-                          {" "}
-                          <option
-                            value=""
-                            disabled
-                            selected
-                            className="bg-[#CDCDCD66]"
-                          >
-                            Name of item
-                          </option>
-                        </select>
+                          value={vehicleYear}
+                          onChange={(e) => setVehicleYear(e.target.value)}
+                          placeholder="2023"
+                        />
                       </div>
                       <div className="w-[48%]">
                         <label
@@ -324,6 +463,8 @@ const CreateListing: React.FC = () => {
                           className="p-3 w-full rounded-lg border bg-slate-50 border-gray-500"
                           name=""
                           id="model"
+                          value={vehicleModel}
+                          onChange={(e) => setVehicleModel(e.target.value)}
                           placeholder="Vehicle Model"
                         />
                       </div>
@@ -342,6 +483,8 @@ const CreateListing: React.FC = () => {
                   <br />
                   <input
                     type="text"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
                     id="price"
                     className="p-3 w-full rounded-lg border border-gray-500"
                     placeholder="Price of item"
@@ -360,6 +503,8 @@ const CreateListing: React.FC = () => {
                   <input
                     type="text"
                     id="location"
+                    value={productLocation}
+                    onChange={(e) => setProductLocation(e.target.value)}
                     className="p-3 w-full rounded-lg border border-gray-500"
                     placeholder="Seller’s location"
                   />
@@ -375,6 +520,8 @@ const CreateListing: React.FC = () => {
                   <input
                     type="text"
                     id="phone"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="p-3 w-full rounded-lg border border-gray-500"
                     placeholder="Phone number"
                   />
@@ -390,6 +537,8 @@ const CreateListing: React.FC = () => {
                 <textarea
                   rows={3}
                   id="description"
+                  value={productDescription}
+                  onChange={(e) => setProductDescription(e.target.value)}
                   className="p-4 w-full border border-[#ACACAC] rounded-lg"
                   placeholder="More detail of item"
                 />
@@ -407,6 +556,8 @@ const CreateListing: React.FC = () => {
                   <textarea
                     rows={3}
                     id="specification"
+                    value={productSpecification}
+                    onChange={(e) => setProductSpecification(e.target.value)}
                     className="p-4 w-full border border-[#ACACAC] rounded-lg"
                     placeholder="More detail of item"
                   />
@@ -416,7 +567,7 @@ const CreateListing: React.FC = () => {
             <div className="w-[70%] mx-auto flex justify-between items-center">
               <div className="w-[25%]">
                 <button
-                  onClick={() => setProductType(null)}
+                  onClick={() => handleGoBack()}
                   className="rounded-full border border-[#828282] hover:bg-gray-300 font-medium py-2 px-4 w-full flex justify-center items-center text-[#585858] text-base"
                 >
                   Back
