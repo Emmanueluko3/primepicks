@@ -10,7 +10,7 @@ import Generator from "../assets/Generator.svg";
 import ProductCard from "../components/molecules/Cards/productCard";
 import Suggestions from "../components/organisms/product/suggestedPicks";
 
-const suggestedPicks = [
+const explore = [
   {
     image: Studiomic,
     title: "Studio Condenser Microphone",
@@ -65,6 +65,21 @@ const Explore: React.FC = () => {
           <Category />
         </div>
         <div className="w-[70%]">
+          <div className=".w-full">
+            <h2 className="text-2xl font-semibold mb-3">Television & Video</h2>
+            <div className="w-full flex justify-between flex-wrap">
+              {explore.map((item, index) => (
+                <div key={index} className="w-[32%] mb-6">
+                  <ProductCard
+                    image={item.image}
+                    title={item.title}
+                    price={item.price}
+                    oldPrice={null}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
           <ProductView />
         </div>
       </div>
