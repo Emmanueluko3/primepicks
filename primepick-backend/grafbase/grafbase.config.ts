@@ -1,5 +1,6 @@
-import { g, auth, config } from "@grafbase/sdk";
+// import { g, auth, config } from "@grafbase/sdk";
 
+import { g, config } from "@grafbase/sdk";
 // Welcome to Grafbase!
 // Define your data models, integrate auth, permission rules, custom resolvers, search, and more with Grafbase.
 // Integrate Auth

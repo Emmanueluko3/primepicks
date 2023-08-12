@@ -7,6 +7,7 @@ import Navbar from "../navbar";
 import Button from "../../atoms/buttons/button";
 import { Link } from "react-router-dom";
 import Imageupload from "../../atoms/icons/Imageupload.svg";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 const listingType = [
   {
@@ -86,10 +87,66 @@ const CreateListing: React.FC = () => {
   const [homeType, setHomeType] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
+  const [productCategoryList, setProductCategoryList] = useState(null);
+
+  const {
+    loading: categoryLoading,
+    error: categoryError,
+    data: productCategories,
+  } = useQuery(gql`
+    query ProductCategoryCollection {
+      productCategoryCollection(last: 100) {
+        edges {
+          node {
+            name
+            id
+          }
+        }
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+        }
+      }
+    }
+  `);
+
+  const [addProduct, { data, loading, error }] = useMutation(gql`
+    mutation ProductCreate($input: ProductCreateInput!) {
+      productCreate(input: $input) {
+        product {
+          name
+        }
+      }
+    }
+  `);
+
+  console.log("productCategories", productCategories);
+  console.log("productCatErrors", categoryError);
+  console.log("productCatLoading", categoryLoading);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productType]);
+
+  useEffect(() => {
+    // const { loading, error, productCategories } = useQuery(gql`
+    //   query ProductCategoryCollection {
+    //     productCategoryCollection(last: 100) {
+    //       edges {
+    //         node {
+    //           name
+    //           id
+    //         }
+    //       }
+    //       pageInfo {
+    //         hasPreviousPage
+    //         hasNextPage
+    //       }
+    //     }
+    //   }
+    // `);
+    // console.log("productCategory", productCategory);
+  }, [productCategoryList]);
 
   const handleGoBack = () => {
     // setSelectedType(null);
@@ -151,6 +208,16 @@ const CreateListing: React.FC = () => {
     price: productPrice,
     currency: "N",
     description: productDescription,
+  };
+
+  const submitProduct = async () => {
+    const mutation = await addProduct({
+      variables: {
+        input: itemListingDetails,
+      },
+    });
+
+    console.log("mutation", mutation);
   };
 
   return (
@@ -361,11 +428,13 @@ const CreateListing: React.FC = () => {
                           >
                             Select
                           </option>
-                          {categories.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
-                            </option>
-                          ))}
+                          {/* {productCategory.data.productCategoryCollection.edges.map(
+                            (item, index) => (
+                              <option key={index} value={item.node.id}>
+                                {item.node.name}
+                              </option>
+                            )
+                          )} */}
                         </select>
                       </div>
                     ) : (
@@ -575,7 +644,13 @@ const CreateListing: React.FC = () => {
               </div>
 
               <div className="w-[25%]">
-                <Button>Continue</Button>
+                <Button
+                  onClick={() => {
+                    submitProduct();
+                  }}
+                >
+                  Continue
+                </Button>
               </div>
             </div>
           </>
