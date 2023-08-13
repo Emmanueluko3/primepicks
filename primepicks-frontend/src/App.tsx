@@ -1,100 +1,50 @@
 import React from "react";
 import "./App.css";
-// import Auths from "./components/templates/auths/auths";
-import {
-  createBrowserRouter,
-  // createRoutesFromElements,
-  // Route,
-  RouterProvider,
-} from "react-router-dom";
+import Auths from "./components/templates/auths/auths";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/home";
 import Explore from "./pages/explore";
 import Cart from "./components/organisms/cart/cart";
 import Checkout from "./components/organisms/cart/checkout";
 import CreateListing from "./components/organisms/product/createListing";
 import Profile from "./components/organisms/userProfile/profile";
-// import ProductView from "./components/organisms/product/productView";
+import { useAppContext } from "./context/auth";
 
-// const router = createBrowserRouter([
-//   createRoutesFromElements(
-//     <Route path="/" element={<Home />}>
-//       <Route path="/explore" element={<Explore />} />
-//     </Route>
-//   )
-// ]);
+const ProtectedRoute: React.FC<{ element: React.ReactNode }> = ({
+  element,
+}: any) => {
+  const { registered } = useAppContext();
+  if (!registered) {
+    return <Auths />;
+  }
+
+  return <>{element}</>;
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
   },
   {
     path: "/create",
-    element: <CreateListing />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
+    element: <ProtectedRoute element={<CreateListing />} />,
   },
   {
     path: "/explore",
     element: <Explore />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
   },
   {
     path: "/profile",
-    element: <Profile />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
+    element: <ProtectedRoute element={<Profile />} />,
   },
   {
     path: "/cart",
     element: <Cart />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
   },
   {
     path: "/checkout",
-    element: <Checkout />,
-    // loader: rootLoader,
-    // children: [
-    //   {
-    //     path: "team",
-    //     element: <ProductView />,
-    //     // loader: teamLoader,
-    //   },
-    // ],
+    element: <ProtectedRoute element={<Checkout />} />,
   },
 ]);
 
@@ -102,8 +52,6 @@ function App() {
   return (
     <div className="">
       <RouterProvider router={router} />
-
-      {/* <Auths /> */}
     </div>
   );
 }
