@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar: React.FC = () => {
   const navLinks = [
@@ -7,6 +8,9 @@ const Navbar: React.FC = () => {
     { label: "About us", href: "/about" },
     { label: "Support", href: "/support" },
   ];
+
+  const reduxStore: any = useSelector((state) => state);
+
   return (
     <div className="w-[90%] mx-auto py-4 flex justify-between items-center">
       <a href="/" className="font-semibold text-2xl">
@@ -60,9 +64,12 @@ const Navbar: React.FC = () => {
               fill="#050505"
             />
           </svg>
-          <span className="h-4 w-4 flex items-center justify-center bg-customGreen text-white absolute -right-3 -top-2 rounded-full text-[12px]">
-            3
-          </span>
+          {reduxStore.cart.cart &&
+            Object?.keys(reduxStore.cart.cart).length !== 0 && (
+              <span className="h-4 w-4 flex items-center justify-center bg-customGreen text-white absolute -right-3 -top-2 rounded-full text-[12px]">
+                {Object?.keys(reduxStore.cart.cart).length}
+              </span>
+            )}
           Cart
         </Link>
         <Link

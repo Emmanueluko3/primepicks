@@ -1,15 +1,16 @@
-// import { g, auth, config } from "@grafbase/sdk";
+import { g, auth, config } from "@grafbase/sdk";
 
-import { g, config } from "@grafbase/sdk";
+// import { g, config } from "@grafbase/sdk";
 // Welcome to Grafbase!
 // Define your data models, integrate auth, permission rules, custom resolvers, search, and more with Grafbase.
 // Integrate Auth
 // https://grafbase.com/docs/auth
 //
-// const authProvider = auth.OpenIDConnect({
-//   issuer: process.env.ISSUER_URL ?? ''
-// })
-//
+const authProvider = auth.JWT({
+  issuer: g.env("ISSUER_URL"),
+  secret: g.env("JWT_SECRET"),
+});
+
 // Define Data Models
 // https://grafbase.com/docs/database
 
@@ -87,18 +88,21 @@ const product = g
     category: g.relation(() => productCategory).optional(),
     owner: g.relation(() => user).optional(),
   })
-  .search();
+  .search()
+  .auth((rules) => {
+    rules.owner().create().update();
+  });
 
 export default config({
   schema: g,
   // Integrate Auth
   // https://grafbase.com/docs/auth
-  // auth: {
-  //   providers: [authProvider],
-  //   rules: (rules) => {
-  //     rules.private()
-  //   }
-  // }
+  auth: {
+    providers: [authProvider],
+    rules: (rules) => {
+      rules.public().read();
+    },
+  },
 });
 
 // {

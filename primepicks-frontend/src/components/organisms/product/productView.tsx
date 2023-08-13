@@ -5,6 +5,8 @@ import Lgtv3 from "../../../assets/Lgtv3.svg";
 import Lgtv4 from "../../../assets/Lgtv4.svg";
 import Lgtv5 from "../../../assets/Lgtv5.svg";
 import Button from "../../atoms/buttons/button";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../../store/actions/index";
 
 // interface ProductViewProps {
 //   image: string;
@@ -27,6 +29,10 @@ const specifications = [
 const ProductView: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState(productImages[0]);
   const [quantity, setQuantity] = useState(1);
+
+  const dispatch = useDispatch();
+  const reduxStore: any = useSelector((state) => state);
+
   return (
     <>
       <div className="w-full mb-5 flex justify-between p-6 border border-[#ACACAC] rounded-lg">
@@ -118,7 +124,33 @@ const ProductView: React.FC = () => {
             </p>
           </div>
           <div className="w-full">
-            <Button>Add to Cart</Button>
+            {reduxStore.cart.cart["Somethin"] ? (
+              <Button
+                onClick={() =>
+                  dispatch(
+                    removeFromCart({
+                      name: "Somethin",
+                      price: "$29.99",
+                    })
+                  )
+                }
+              >
+                Remove
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      name: "Somethin",
+                      price: "$29.99",
+                    })
+                  )
+                }
+              >
+                Add to Cart
+              </Button>
+            )}
           </div>
         </div>
       </div>

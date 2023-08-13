@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Input from "../atoms/inputs/input";
-import Dropdown from "../atoms/dropdown/dropdowx";
 
 const Category: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);

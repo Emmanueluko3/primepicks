@@ -5,17 +5,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloProviderWrapper } from "./ApolloWrapper";
 import AppWrapper from "./context/auth";
+import { Provider } from "react-redux";
+import store from "./store/index.js";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppWrapper>
-      <ApolloProviderWrapper>
-        <App />
-      </ApolloProviderWrapper>
-    </AppWrapper>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppWrapper>
+          <ApolloProviderWrapper>
+            <App />
+          </ApolloProviderWrapper>
+        </AppWrapper>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

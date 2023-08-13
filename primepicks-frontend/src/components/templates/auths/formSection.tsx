@@ -22,7 +22,7 @@ const FormSection: React.FC = () => {
       location: location,
     };
     console.log("user is ", user);
-    setIsRegistered(true);
+    setRegistered(true);
   };
 
   const handleRegister = () => {
@@ -31,7 +31,7 @@ const FormSection: React.FC = () => {
       fullName: fullName,
       location: location,
     };
-    setIsRegistered(true);
+    setRegistered(true);
   };
 
   return (
