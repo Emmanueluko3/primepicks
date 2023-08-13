@@ -78,6 +78,7 @@ const product = g
     location: g.string(),
     price: g.decimal().optional(),
     currency: g.string().optional(),
+    condition: g.string().optional(),
     specifications: g
       .relation(() => specification)
       .optional()

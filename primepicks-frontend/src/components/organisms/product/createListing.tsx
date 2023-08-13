@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Item from "../../../assets/Item.svg";
 import Vehicle from "../../../assets/Vehicle.svg";
 import Home from "../../../assets/Home.svg";
@@ -8,6 +8,7 @@ import Button from "../../atoms/buttons/button";
 import { Link } from "react-router-dom";
 import Imageupload from "../../atoms/icons/Imageupload.svg";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import ImageUpload from "../../hooks/imageUpload";
 
 const listingType = [
   {
@@ -26,20 +27,6 @@ const listingType = [
     description:
       "Create listing for your single or multiple apartments available to sell/rent.",
   },
-];
-
-const categories = [
-  "Electronics",
-  "Apparels",
-  "Shoes",
-  "Home Goods",
-  "Musical Instruments",
-  "Pet Supplies",
-  "Toys & Games",
-  "Garden",
-  "Outdoor",
-  "Beauty",
-  "Entertainment",
 ];
 
 const vehicleTypes = ["Car", "Truck", "Motorcycle", "Bus"];
@@ -68,10 +55,16 @@ const homeTypes = [
   "Transitional",
 ];
 
+const preset_key = process.env.REACT_APP_PRESET_KEY;
+// const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+const api_url: any = process.env.REACT_APP_CLOUDINARY_URL;
+
 const CreateListing: React.FC = () => {
   const [selectedType, setSelectedType] = useState<number | null>(null);
   const [productType, setProductType] = useState<number | null>(null);
 
+  const imageRef = useRef<any>(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [productTitle, setProductTitle] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productCondition, setProductCondition] = useState("");
@@ -87,7 +80,29 @@ const CreateListing: React.FC = () => {
   const [homeType, setHomeType] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
-  const [productCategoryList, setProductCategoryList] = useState(null);
+
+  const handleImageRead = async (event: any): Promise<void> => {
+    const file = event.target.files[0];
+    const formData: any = new FormData();
+    formData.append("file", file);
+    formData.append("upload _preset", preset_key);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(api_url, formData);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const myImage = await response.json();
+        console.log("My Image", myImage);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+    console.log("triggered");
+    setImageUrl(String() || "");
+  };
 
   const {
     loading: categoryLoading,
@@ -120,33 +135,12 @@ const CreateListing: React.FC = () => {
     }
   `);
 
-  console.log("productCategories", productCategories);
-  console.log("productCatErrors", categoryError);
-  console.log("productCatLoading", categoryLoading);
+  const productCategoryList =
+    productCategories?.productCategoryCollection?.edges ?? [];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productType]);
-
-  useEffect(() => {
-    // const { loading, error, productCategories } = useQuery(gql`
-    //   query ProductCategoryCollection {
-    //     productCategoryCollection(last: 100) {
-    //       edges {
-    //         node {
-    //           name
-    //           id
-    //         }
-    //       }
-    //       pageInfo {
-    //         hasPreviousPage
-    //         hasNextPage
-    //       }
-    //     }
-    //   }
-    // `);
-    // console.log("productCategory", productCategory);
-  }, [productCategoryList]);
 
   const handleGoBack = () => {
     // setSelectedType(null);
@@ -173,14 +167,22 @@ const CreateListing: React.FC = () => {
 
   const itemListingDetails = {
     name: productTitle,
-    category: productCategory,
+    category: {
+      link: productCategory,
+    },
     condition: productCondition,
     location: productLocation,
     phone: phoneNumber,
     price: productPrice,
     currency: "N",
     description: productDescription,
-    specifications: productSpecification,
+    // specifications: productSpecification,
+    specifications: {
+      create: {
+        text: productSpecification,
+      },
+    },
+    slug: productTitle.split(" ").join("-"),
   };
 
   const vehicleListingDetails = {
@@ -211,9 +213,21 @@ const CreateListing: React.FC = () => {
   };
 
   const submitProduct = async () => {
+    let input = itemListingDetails;
+
+    // let specifications = itemListingDetails.specifications;
+    // delete input.specifications;
+    // const input = {
+
+    //   specifications: {
+    //     create: {
+    //       text: itemListingDetails,
+    //     },
+    //   },
+    // };
     const mutation = await addProduct({
       variables: {
-        input: itemListingDetails,
+        input,
       },
     });
 
@@ -281,12 +295,21 @@ const CreateListing: React.FC = () => {
               action=""
               className="mx-auto mb-16 w-[70%] border border-[#ACACAC] rounded-lg p-5"
             >
-              <div className="cursor-pointer border border-[#ACACAC] h-80 w-full rounded-md flex justify-center items-center flex-col mb-5">
+              <div
+                onClick={() => imageRef.current.click()}
+                className="cursor-pointer border border-[#ACACAC] h-80 w-full rounded-md flex justify-center items-center flex-col mb-5"
+              >
                 <div className="rounded-full w-16 h-16 bg-[#CDCDCD66] flex justify-center items-center mb-5">
                   <img src={Imageupload} className="h-10 w-10" alt="" />
                 </div>
                 <h3 className="font-semibold text-2xl mb-[6px]">Add Photos</h3>
                 <p className="text-base">You can add up to five photos</p>
+                <input
+                  onChange={handleImageRead}
+                  type="file"
+                  ref={imageRef}
+                  className="hidden"
+                />
               </div>
 
               <div className="mb-5 w-full">
@@ -428,13 +451,11 @@ const CreateListing: React.FC = () => {
                           >
                             Select
                           </option>
-                          {/* {productCategory.data.productCategoryCollection.edges.map(
-                            (item, index) => (
-                              <option key={index} value={item.node.id}>
-                                {item.node.name}
-                              </option>
-                            )
-                          )} */}
+                          {productCategoryList.map((item: any, index: any) => (
+                            <option key={index} value={item.node.id}>
+                              {item.node.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     ) : (
