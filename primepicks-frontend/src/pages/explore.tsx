@@ -1,37 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/organisms/navbar";
 import Footer from "../components/organisms/footer";
 import Category from "../components/organisms/category";
 import ProductView from "../components/organisms/product/productView";
-import Studiomic from "../assets/Studiomic.svg";
-import Lgtv2 from "../assets/Lgtv2.svg";
-import Studiomic2 from "../assets/Studiomic2.svg";
-import Generator from "../assets/Generator.svg";
+// import Studiomic from "../assets/Studiomic.svg";
+// import Lgtv2 from "../assets/Lgtv2.svg";
+// import Studiomic2 from "../assets/Studiomic2.svg";
+// import Generator from "../assets/Generator.svg";
 import ProductCard from "../components/molecules/Cards/productCard";
 import Suggestions from "../components/organisms/product/suggestedPicks";
-
-const explore = [
-  {
-    image: Studiomic,
-    title: "Studio Condenser Microphone",
-    price: "N 40,000",
-  },
-  {
-    image: Lgtv2,
-    title: "Samsung 43″ FHD Smart TV",
-    price: "N 98,000",
-  },
-  {
-    image: Studiomic2,
-    title: "USB Condenser Microphone",
-    price: "N 27,570",
-  },
-  {
-    image: Generator,
-    title: "Haier Thermocool Generator",
-    price: "N 163,900",
-  },
-];
+import products from "../store/data";
 
 const reviews = [
   {
@@ -57,6 +35,7 @@ const reviews = [
   },
 ];
 const Explore: React.FC = () => {
+  const [preview, setPreview] = useState(false);
   return (
     <>
       <Navbar />
@@ -65,22 +44,31 @@ const Explore: React.FC = () => {
           <Category />
         </div>
         <div className="w-[70%]">
-          <div className=".w-full">
-            <h2 className="text-2xl font-semibold mb-3">Television & Video</h2>
-            <div className="w-full flex justify-between flex-wrap">
-              {explore.map((item, index) => (
-                <div key={index} className="w-[32%] mb-6">
-                  <ProductCard
-                    image={item.image}
-                    title={item.title}
-                    price={item.price}
-                    oldPrice={null}
-                  />
-                </div>
-              ))}
+          {preview ? (
+            <ProductView />
+          ) : (
+            <div className=".w-full">
+              <h2 className="text-2xl font-semibold mb-3">
+                Television & Video
+              </h2>
+              <div className="w-full flex justify-between flex-wrap">
+                {products.map((item, index) => (
+                  <div
+                    onClick={() => setPreview(true)}
+                    key={index}
+                    className="w-[32%] mb-6"
+                  >
+                    <ProductCard
+                      image={item.imageUrls[0]}
+                      title={item.title}
+                      price={item.price}
+                      oldPrice={null}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <ProductView />
+          )}
         </div>
       </div>
       <Suggestions />

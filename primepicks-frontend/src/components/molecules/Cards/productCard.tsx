@@ -20,8 +20,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="p-4">
         <p className="text-[16px] text-[#2F2F2F]">{title}</p>
-        <h3 className="text-[16px] font-bold">{price}</h3>
-        <p className="text-sm text-gray-400 line-through">{oldPrice}</p>
+        <h3 className="text-[16px] font-bold">N {price}</h3>
+        <p className="text-sm text-gray-400 line-through">N {oldPrice}</p>
       </div>
     </div>
   );
