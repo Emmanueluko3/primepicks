@@ -14,40 +14,46 @@ const authProvider = auth.JWT({
 // Define Data Models
 // https://grafbase.com/docs/database
 
-const post = g
-  .model("Post", {
-    title: g.string(),
-    slug: g.string().unique(),
-    content: g.string().optional(),
-    publishedAt: g.datetime().optional(),
-    comments: g
-      .relation(() => comment)
-      .optional()
-      .list()
-      .optional(),
-    likes: g.int().default(0),
-    tags: g.string().optional().list().length({ max: 5 }),
-    author: g.relation(() => user).optional(),
-  })
-  .search();
+// const post = g
+//   .model("Post", {
+//     title: g.string(),
+//     slug: g.string().unique(),
+//     content: g.string().optional(),
+//     publishedAt: g.datetime().optional(),
+//     comments: g
+//       .relation(() => comment)
+//       .optional()
+//       .list()
+//       .optional(),
+//     likes: g.int().default(0),
+//     tags: g.string().optional().list().length({ max: 5 }),
+//     author: g.relation(() => user).optional(),
+//   })
+//   .search();
 
-const comment = g.model("Comment", {
-  post: g.relation(post),
-  body: g.string(),
-  likes: g.int().default(0),
-  author: g.relation(() => user).optional(),
-});
+// const comment = g.model("Comment", {
+//   post: g.relation(post),
+//   body: g.string(),
+//   likes: g.int().default(0),
+//   author: g.relation(() => user).optional(),
+// });
 
 const user = g.model("User", {
   name: g.string(),
-  email: g.email().optional(),
-  posts: g.relation(post).optional().list(),
-  comments: g.relation(comment).optional().list(),
+  email: g.email().unique(),
+  location: g.string().optional(),
+  passwordHash: g.string(),
+  // posts: g.relation(post).optional().list(),
+  // comments: g.relation(comment).optional().list(),
 
   // Extend models with resolvers
   // https://grafbase.com/docs/edge-gateway/resolvers
   // gravatar: g.url().resolver('user/gravatar')
 });
+// .auth((rules) => {
+// rules.private().read();
+// rules.owner().update();
+// });
 
 const productCategory = g.model("ProductCategory", {
   name: g.string(),
@@ -88,10 +94,10 @@ const product = g
     category: g.relation(() => productCategory).optional(),
     owner: g.relation(() => user).optional(),
   })
-  .search()
-  .auth((rules) => {
-    rules.owner().create().update();
-  });
+  .search();
+// .auth((rules) => {
+// rules.owner().create().update();
+// });
 
 export default config({
   schema: g,
@@ -100,7 +106,7 @@ export default config({
   auth: {
     providers: [authProvider],
     rules: (rules) => {
-      rules.public().read();
+      // rules.public().read();
     },
   },
 });

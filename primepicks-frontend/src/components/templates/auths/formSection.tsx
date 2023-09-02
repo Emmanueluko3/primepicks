@@ -6,6 +6,7 @@ import Input from "../../atoms/inputs/input";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../../context/auth";
 import Button from "../../atoms/buttons/button";
+import { gql, useQuery } from "@apollo/client";
 
 const FormSection: React.FC = () => {
   const [isRegistered, setIsRegistered] = useState(true);
@@ -15,12 +16,30 @@ const FormSection: React.FC = () => {
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
 
+  // const [user: fetchUserGQL, {
+  //   loading: userFetchLoading,
+  //   error: userFetchError,
+  //   data: userFetchData,
+  // }] = useQuery(gql`
+  //   query User($input: UserByInput) {
+  //     user(by: $input) {
+  //       email
+  //       name
+  //       passwordHash
+  //       id
+  //       location
+  //     }
+  //   }
+  // `);
+
   const handleLogin = () => {
     const user = {
       email: email,
-      fullName: fullName,
-      location: location,
+      // passwrd: password,
+      // location: location,
+      // {email: "admin@email.com"}
     };
+
     console.log("user is ", user);
     setRegistered(true);
   };

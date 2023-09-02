@@ -83,6 +83,7 @@ const TrendingPicks: React.FC = () => {
         {trendingItems.map((item, index) => (
           <div key={index} className="w-[23.5%] mb-6">
             <ProductCard
+              id={index}
               image={item.image}
               title={item.title}
               price={item.price}

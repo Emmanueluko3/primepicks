@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/organisms/navbar";
 import Footer from "../components/organisms/footer";
 import Category from "../components/organisms/category";
@@ -10,6 +10,7 @@ import ProductView from "../components/organisms/product/productView";
 import ProductCard from "../components/molecules/Cards/productCard";
 import Suggestions from "../components/organisms/product/suggestedPicks";
 import products from "../store/data";
+import { useParams } from "react-router-dom";
 
 const reviews = [
   {
@@ -35,7 +36,15 @@ const reviews = [
   },
 ];
 const Explore: React.FC = () => {
-  const [preview, setPreview] = useState(false);
+  const [preview, setPreview] = useState(true);
+  const { id }: any = useParams<{ id: string }>();
+  const product = products.find((product) => product.id === parseInt(id));
+
+  console.log(product);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [product]);
   return (
     <>
       <Navbar />
@@ -53,12 +62,9 @@ const Explore: React.FC = () => {
               </h2>
               <div className="w-full flex justify-between flex-wrap">
                 {products.map((item, index) => (
-                  <div
-                    onClick={() => setPreview(true)}
-                    key={index}
-                    className="w-[32%] mb-6"
-                  >
+                  <div key={index} className="w-[32%] mb-6">
                     <ProductCard
+                      id={item.id}
                       image={item.imageUrls[0]}
                       title={item.title}
                       price={item.price}

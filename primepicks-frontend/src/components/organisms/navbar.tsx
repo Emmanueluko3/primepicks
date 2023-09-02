@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const Navbar: React.FC = () => {
+  const [showLinks, setShowLinks] = useState(false);
   const navLinks = [
     { label: "Explore", href: "/explore" },
     { label: "About us", href: "/about" },
@@ -12,25 +13,77 @@ const Navbar: React.FC = () => {
   const reduxStore: any = useSelector((state) => state);
 
   return (
-    <div className="w-[90%] mx-auto py-4 flex justify-between items-center">
-      <a href="/" className="font-semibold text-2xl">
-        PrimePicks
-      </a>
+    <div className="w-[90%] mx-auto py-4 flex justify-between lg:items-center flex-col lg:flex-row">
+      <div className="flex items-center">
+        <button
+          onClick={() => setShowLinks(!showLinks)}
+          className={`lg:hidden h-10 w-10 block relative rounded-md mr-1 ${
+            showLinks ? "" : ""
+          }`}
+        >
+          <span
+            className={`block transition-transform duration-300 ease-out h-1 w-6 bg-customGreen mb-1 ${
+              showLinks
+                ? " rotate-45 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                : ""
+            }`}
+          ></span>
+          <span
+            className={`block transition-opacity duration-300 ease-out h-1 w-6 bg-customGreen mb-1 ${
+              showLinks ? "opacity-0" : "opacity-100"
+            }`}
+          ></span>
+          <span
+            className={`block transition-transform duration-300 ease-out h-1 w-6 bg-customGreen ${
+              showLinks
+                ? "-rotate-45 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                : ""
+            }`}
+          ></span>
+        </button>
+        <a href="/" className="font-semibold lg:text-2xl text-lg">
+          PrimePicks
+        </a>
+        <div className="flex ml-auto lg:hidden">
+          <Link
+            to="/create"
+            className="rounded-full flex items-center justify-center hover:opacity-90 text-white font-medium w-full h-full text-[12px] border-gray-300 py-1 px-3 bg-customGreen"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="mr-1"
+            >
+              <path
+                d="M18 12.998H13V17.998C13 18.2632 12.8946 18.5176 12.7071 18.7051C12.5196 18.8926 12.2652 18.998 12 18.998C11.7348 18.998 11.4804 18.8926 11.2929 18.7051C11.1054 18.5176 11 18.2632 11 17.998V12.998H6C5.73478 12.998 5.48043 12.8926 5.29289 12.7051C5.10536 12.5176 5 12.2632 5 11.998C5 11.7328 5.10536 11.4784 5.29289 11.2909C5.48043 11.1033 5.73478 10.998 6 10.998H11V5.99799C11 5.73277 11.1054 5.47842 11.2929 5.29088C11.4804 5.10334 11.7348 4.99799 12 4.99799C12.2652 4.99799 12.5196 5.10334 12.7071 5.29088C12.8946 5.47842 13 5.73277 13 5.99799V10.998H18C18.2652 10.998 18.5196 11.1033 18.7071 11.2909C18.8946 11.4784 19 11.7328 19 11.998C19 12.2632 18.8946 12.5176 18.7071 12.7051C18.5196 12.8926 18.2652 12.998 18 12.998Z"
+                fill="white"
+              />
+            </svg>
+            Create New Listing
+          </Link>
+        </div>
+      </div>
 
-      <ul className="flex items-center">
+      <ul className="flex lg:items-center flex-col lg:flex-row">
         {navLinks.map((item, index) => (
           <li key={index}>
-            <Link to={item.href} className="mx-4 font-medium text-[16px]">
+            <Link
+              to={item.href}
+              className="lg:mx-4 lg:my-0 my-2 font-medium text-[16px]"
+            >
               {item.label}
             </Link>
           </li>
         ))}
       </ul>
 
-      <div className="flex items-center">
+      <div className="flex w-auto lg:items-center flex-col lg:flex-row">
         <Link
           to="/profile"
-          className="flex mr-6 font-medium hover:opacity-80 text-[16px]"
+          className="flex lg:mr-6 mb-2 lg:mb-0 font-medium hover:opacity-80 text-[16px]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +127,7 @@ const Navbar: React.FC = () => {
         </Link>
         <Link
           to="/create"
-          className="rounded-full flex items-center justify-center hover:opacity-90 text-white font-medium w-full h-full border-gray-300 py-2 px-6 bg-customGreen"
+          className="rounded-full hidden lg:flex items-center justify-center hover:opacity-90 text-white font-medium w-full h-full border-gray-300 py-2 px-6 bg-customGreen"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

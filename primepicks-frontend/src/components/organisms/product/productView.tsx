@@ -8,30 +8,18 @@ import Button from "../../atoms/buttons/button";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../../store/actions/index";
 import products from "../../../store/data";
-import { useParams } from "react-router-dom";
 
-const productImages = [Lgtv, Lgtv2, Lgtv3, Lgtv4, Lgtv5];
-const specifications = [
-  "SKU: SA948EA29N628NAFAMZ",
-  "Product Line: Kaylas Mart Electronics",
-  " Model: Samsung 5300",
-  "Size (L x W x H cm): 1145.0 x 659.0 x 136.0‎",
-  "Weight (kg): 11",
-  "Color: Black",
-  "Main Material: N/A",
-];
+const product = products[0];
 
 const ProductView: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState(productImages[0]);
+  const [selectedImage, setSelectedImage] = useState(product.imageUrls[0]);
 
   const dispatch = useDispatch();
   const reduxStore: any = useSelector((state) => state);
 
-  const { productId } = useParams<{ productId: any }>();
-  const product = products.find(
-    (product) => product.id === parseInt(productId)
-  );
-  console.log(product);
+  // const isProductInCart = reduxStore.cart.items.some(
+  //   (item) => item.id === product.id
+  // );
 
   return (
     <>
@@ -41,7 +29,7 @@ const ProductView: React.FC = () => {
             <img src={selectedImage} className="w-full h-full" alt="Laptop" />
           </div>
           <div className="w-full flex">
-            {productImages.map((image, index) => (
+            {product.imageUrls.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(image)}
@@ -61,51 +49,28 @@ const ProductView: React.FC = () => {
           <div className="border-b-2 pb-5 mb-5">
             <div className="mb-2">
               <span className="bg-customLightGreen text-customGreen rounded-full text-sm px-[10px] py-[6px]">
-                New
+                {product.condition}
               </span>
             </div>
-            <h4 className="font-medium text-3xl">
-              Samsung All New 43 Inch 5300 FHD Smart Television
-            </h4>
-            <p className="text-[#686767] text-sm my-1">Location: Lagos</p>
-            <p className="text-customGreen text-sm font-medium mb-4">
-              + 234 813 1210 163
+            <h4 className="font-medium text-3xl">{product.title}</h4>
+            <p className="text-[#686767] text-sm my-1">
+              Location: {product.location}
             </p>
-            <h3 className="text-xl">N 98,000</h3>
+            <p className="text-customGreen text-sm font-medium mb-4">
+              {product.phone}
+            </p>
+            <h3 className="text-xl">N {product.price}</h3>
           </div>
           <div className="w-full mb-5">
-            <p className="text-[16px]">
-              The T5300 has built-in Wi-Fi and Ethernet connectivity to allow
-              access to your favorite apps and internet-based content, plus
-              content-sharing and screen-mirroring with other smart devices such
-              as your smartphone or tablet.{" "}
-            </p>
+            <p className="text-[16px]">{product.description}</p>
           </div>
           <div className="w-full">
-            {reduxStore.cart.cart["Somethin"] ? (
-              <Button
-                onClick={() =>
-                  dispatch(
-                    removeFromCart({
-                      name: "Somethin",
-                      price: "$29.99",
-                    })
-                  )
-                }
-              >
+            {reduxStore.cart.cart === product.id ? (
+              <Button onClick={() => dispatch(removeFromCart(product))}>
                 Remove
               </Button>
             ) : (
-              <Button
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      name: "Somethin",
-                      price: "$29.99",
-                    })
-                  )
-                }
-              >
+              <Button onClick={() => dispatch(addToCart(product))}>
                 Add to Cart
               </Button>
             )}
@@ -115,7 +80,7 @@ const ProductView: React.FC = () => {
       <div className="w-full flex flex-col p-6 border border-[#ACACAC] rounded-lg">
         <h2 className="text-lg font-medium">Specifications</h2>
         <ul className="p-4 mx-3 list-disc">
-          {specifications.map((item, index) => (
+          {product.specification.map((item, index) => (
             <li className="text-[#2F2F2F] my-1" key={index}>
               {item}
             </li>

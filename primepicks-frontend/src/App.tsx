@@ -9,6 +9,7 @@ import Checkout from "./components/organisms/cart/checkout";
 import CreateListing from "./components/organisms/product/createListing";
 import Profile from "./components/organisms/userProfile/profile";
 import { useAppContext } from "./context/auth";
+import ProductView from "./components/organisms/product/productView";
 
 const ProtectedRoute: React.FC<{ element: React.ReactNode }> = ({
   element,
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/explore",
+    element: <Explore />,
+  },
+  {
+    path: "/explore/:id",
     element: <Explore />,
   },
   {
